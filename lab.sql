@@ -69,4 +69,13 @@
     WHERE s.store_id = 1 AND f.title = 'Academy Dinosaur'; 
     
 -- 8. Provide a list of all distinct film titles, along with their availability status in the inventory. Include a column indicating whether each title is 'Available' or 'NOT available.' Note that there are 42 titles that are not in the inventory, and this information can be obtained using a `CASE` statement combined with `IFNULL`."
--- 	SELECT DISTINCT f.title, 
+	SELECT DISTINCT f.title AS Film,
+		CASE
+			WHEN i.inventory_id IS NULL THEN 'Not Available'
+            ELSE 'Available'
+		END AS 'Availability'
+	FROM sakila.film AS f
+    LEFT JOIN sakila.inventory AS i 
+    ON f.film_id = i.film_id
+    ORDER BY Film ASC;
+	
